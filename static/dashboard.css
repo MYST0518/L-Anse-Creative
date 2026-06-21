@@ -1169,8 +1169,8 @@ select.form-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-header);
-  font-weight: 500;
+  font-family: var(--font-family);
+  font-weight: 700;
   font-size: 14px;
   box-shadow: none;
 }
