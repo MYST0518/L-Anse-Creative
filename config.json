@@ -1,0 +1,7 @@
+{
+  "stripe_api_key": "sk_test_placeholder",
+  "stripe_webhook_secret": "whsec_placeholder",
+  "gemini_api_key": "AIzaSy_placeholder",
+  "port": 8080,
+  "app_url": "http://localhost:8080"
+}
