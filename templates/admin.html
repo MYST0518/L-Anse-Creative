@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者コンソール - L'Anse Creative</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">L'Anse Creative<span>管理者コントロール</span></a>
+      <ul class="nav-menu">
+        <li><a href="/" class="nav-link">トップ</a></li>
+        <li><a href="/admin" class="nav-link">管理者パネル</a></li>
+        <li><span style="color:var(--text-muted); font-size:13.5px;">管理者ログイン中</span></li>
+        <li><a href="/logout" class="nav-link">ログアウト</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <div style="margin-bottom: 40px; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h1 style="font-size: 26px; font-weight: 800;">統合管理システムコントロールパネル</h1>
+        <p style="color: var(--text-muted);">顧客の利用ステータス、サイト作成状況、Stripeの決済追跡、ドメインマッピングの承認を集中管理します。</p>
+      </div>
+      <a href="/" class="btn btn-secondary">🏠 サイトトップへ</a>
+    </div>
+
+    <!-- Alert Notifications -->
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('domain') === 'approved') {
+        document.write('<div class="alert alert-success">ドメインの紐付けおよび本番公開承認が完了しました！</div>');
+      }
+      if (urlParams.get('status') === 'toggled') {
+        document.write('<div class="alert alert-success">サイトの公開ステータス（Staging / Live）を切り替えました。</div>');
+      }
+    </script>
+
+    <!-- SECTION 1: REGISTERED CLIENTS & WEBSITES -->
+    <div class="card" style="margin-bottom: 40px;">
+      <h3 class="card-title">👥 契約顧客・公開サイト一覧</h3>
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>顧客名 / 店舗名</th>
+              <th>メールアドレス</th>
+              <th>Stripe決済状況</th>
+              <th>希望ドメイン</th>
+              <th>ドメイン状態</th>
+              <th>公開状態</th>
+              <th>操作アクション</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in users %}
+              <tr>
+                <td>{{ u.id }}</td>
+                <td>
+                  <strong>{{ u.name }}</strong>
+                  {% if u.business_name %}
+                    <br><span style="font-size:11px; color:var(--text-muted);">店舗名: {{ u.business_name }}</span>
+                  {% endif %}
+                </td>
+                <td>{{ u.email }}</td>
+                <td>
+                  {% if u.subscription_status == 'active' %}
+                    <span class="badge badge-success">決済完了 (Active)</span>
+                  {% elif u.subscription_status == 'past_due' %}
+                    <span class="badge badge-danger">決済失敗 (Past Due)</span>
+                  {% else %}
+                    <span class="badge badge-warning">未決済 (Unpaid)</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if u.domain_requested %}
+                    <code style="background-color:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">{{ u.domain_requested }}</code>
+                  {% else %}
+                    <span style="color:var(--text-muted);">未登録</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if u.domain_requested %}
+                    {% if u.domain_status == 'active' %}
+                      <span class="badge badge-success">連携済</span>
+                    {% else %}
+                      <span class="badge badge-warning">承認待ち</span>
+                    {% endif %}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td>
+                  {% if u.published_status == 'live' %}
+                    <span class="badge badge-success">本番公開 (Live)</span>
+                  {% elif u.published_status == 'staging' %}
+                    <span class="badge badge-warning">一時停止 (Staging)</span>
+                  {% else %}
+                    <span style="color:var(--text-muted);">未生成</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <div style="display:flex; gap:8px;">
+                    <!-- Approve Domain Button -->
+                    {% if u.domain_requested and u.domain_status != 'active' %}
+                      <form action="/admin/approve-domain/{{ u.id }}" method="POST">
+                        <button type="submit" class="btn btn-primary" style="padding: 6px 12px; font-size:12px;">👍 承認</button>
+                      </form>
+                    {% endif %}
+                    
+                    <!-- Toggle Status Button (Suspend/Activate) -->
+                    {% if u.published_status %}
+                      <form action="/admin/toggle-status/{{ u.id }}" method="POST">
+                        {% if u.published_status == 'live' %}
+                          <button type="submit" class="btn btn-secondary" style="padding: 6px 12px; font-size:12px; border-color:var(--danger); color:var(--danger);">⚠️ 停止</button>
+                        {% else %}
+                          <button type="submit" class="btn btn-secondary" style="padding: 6px 12px; font-size:12px; border-color:var(--success); color:var(--success);">✅ 再開</button>
+                        {% endif %}
+                      </form>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="8" style="text-align:center; color:var(--text-muted);">登録されている契約顧客はまだいません。</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECTION 2: DEMO REQUEST LEADS -->
+    <div class="card">
+      <h3 class="card-title">📝 無料デモ制作 問い合わせ案件一覧</h3>
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>お名前</th>
+              <th>メールアドレス</th>
+              <th>店舗名・サービス名</th>
+              <th>業種</th>
+              <th>ステータス</th>
+              <th>依頼日</th>
+              <th>詳細</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in demo_requests %}
+              <tr>
+                <td>{{ r.id }}</td>
+                <td><strong>{{ r.name }}</strong></td>
+                <td>{{ r.email }}</td>
+                <td>{{ r.business_name }}</td>
+                <td><span class="badge badge-warning">{{ r.industry }}</span></td>
+                <td>
+                  <span class="badge badge-success">{{ r.status }}</span>
+                </td>
+                <td style="font-size:12px; color:var(--text-muted);">{{ r.created_at }}</td>
+                <td>
+                  <button type="button" class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px;" onclick="toggleDetails({{ r.id }})">詳細 ⬦</button>
+                </td>
+              </tr>
+              <!-- Expandable details row -->
+              <tr id="details-{{ r.id }}" class="admin-detail-row" style="display: none;">
+                <td colspan="8" style="padding: 0;">
+                  <div class="admin-detail-card">
+                    <div class="admin-detail-label">電話番号</div>
+                    <div class="admin-detail-val">{{ r.phone if r.phone else '未入力' }}</div>
+                    
+                    <div class="admin-detail-label">希望テイスト</div>
+                    <div class="admin-detail-val">{{ r.tone if r.tone else '未選択' }}</div>
+                    
+                    <div class="admin-detail-label">お店の強み</div>
+                    <div class="admin-detail-val" style="white-space: pre-wrap;">{{ r.strengths if r.strengths else '未入力' }}</div>
+                    
+                    <div class="admin-detail-label">ターゲット層</div>
+                    <div class="admin-detail-val">{{ r.target if r.target else '未入力' }}</div>
+                    
+                    <div class="admin-detail-label">ご相談内容・メッセージ</div>
+                    <div class="admin-detail-val" style="white-space: pre-wrap;">{{ r.message if r.message else 'なし' }}</div>
+                  </div>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="8" style="text-align:center; color:var(--text-muted);">デモ制作のご依頼はまだありません。</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleDetails(id) {
+      const detailsRow = document.getElementById('details-' + id);
+      if (detailsRow.style.display === 'none') {
+        detailsRow.style.display = 'table-row';
+      } else {
+        detailsRow.style.display = 'none';
+      }
+    }
+  </script>
+
+</body>
+</html>
