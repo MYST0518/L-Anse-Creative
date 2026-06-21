@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイページ - L'Anse Creative</title>
+  <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">L'Anse Creative<span>マイページ</span></a>
+      <ul class="nav-menu">
+        <li><a href="/" class="nav-link">トップ</a></li>
+        <li><a href="/mypage" class="nav-link">マイページ</a></li>
+        <li><span style="color:var(--text-muted); font-size:13.5px;">ようこそ、{{ user.name }} 様</span></li>
+        <li><a href="/logout" class="nav-link">ログアウト</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- URL parameter notifications -->
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('payment') === 'simulated') {
+        document.write('<div class="alert alert-success">【デモ】Stripe決済が正常にシミュレートされ、定期購読が有効化されました！</div>');
+      }
+      if (urlParams.get('payment') === 'success') {
+        document.write('<div class="alert alert-success">Stripeによる決済手続きが正常に完了し、定期購読が開始されました！</div>');
+      }
+      if (urlParams.get('generate') === 'success') {
+        document.write('<div class="alert alert-success">ホームページ構成案の作成と流し込みが完了しました！</div>');
+      }
+      if (urlParams.get('revision') === 'success') {
+        document.write('<div class="alert alert-success">修正指示が送信され、プレビューに反映されました。</div>');
+      }
+      if (urlParams.get('domain') === 'requested') {
+        document.write('<div class="alert alert-success">希望ドメインの申請を受け付けました。管理者の反映をお待ちください。</div>');
+      }
+    </script>
+
+    <!-- UNPAID / DELINQUENT OVERLAY CARD -->
+    {% if user.subscription_status != 'active' %}
+      <div class="card" style="max-width: 600px; margin: 40px auto; text-align: center;">
+        <div style="font-size: 48px; margin-bottom: 20px;">🔒</div>
+        <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 15px; color: var(--text-main);">定期購読のご登録が必要です</h2>
+        <p style="color: var(--text-muted); font-size: 14.5px; margin-bottom: 30px; line-height: 1.7;">
+          ホームページの管理機能、構成レイアウト編集、独自ドメインの設定、およびサーバー保守管理をご利用いただくには、月額サブスクリプション（月額 2,980円 税込）のご登録が必要です。
+        </p>
+        <form action="/create-checkout-session" method="POST">
+          <button type="submit" class="btn btn-primary" style="padding: 14px 40px; font-size: 16px; width: 100%;">
+            🔒 Stripeで安全に購読を開始する
+          </button>
+        </form>
+        <div style="font-size: 12px; color: var(--text-muted); margin-top: 15px;">
+          ※テスト環境では、自動的に「擬似決済成功」処理が行われ、即座にマイページがお使いいただけます。
+        </div>
+      </div>
+
+    <!-- ACTIVE CLIENT MYPAGE -->
+    {% else %}
+      <div class="dashboard-grid">
+        
+        <!-- LEFT: INPUTS & REVISIONS -->
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+          
+          <!-- AI Generation Form -->
+          <div class="card">
+            <h3 class="card-title">✨ ホームページ構成・原稿作成フォーム</h3>
+            <form action="/generate-site" method="POST">
+              <div class="form-group">
+                <label for="businessName">店舗名・サービス名</label>
+                <input type="text" id="businessName" name="business_name" class="form-control" 
+                       value="{{ website.business_name if website else '' }}" placeholder="例：カフェ・ランセ" required>
+              </div>
+              <div class="form-group">
+                <label for="industry">業種</label>
+                <input type="text" id="industry" name="industry" class="form-control" 
+                       value="{{ website.industry if website else '' }}" placeholder="例：イタリアンカフェ、美容室" required>
+              </div>
+              <div class="form-group">
+                <label for="strengths">お店の強み・特徴</label>
+                <textarea id="strengths" name="strengths" class="form-control" placeholder="例：契約農家から届く有機野菜、駅チカ、個室完備、創業10年の実績など" required>{{ website.inputs_json|default('{}')|object_lookup('strengths') if website else '' }}</textarea>
+              </div>
+              <div class="form-group">
+                <label for="target">ターゲット顧客層</label>
+                <input type="text" id="target" name="target" class="form-control" 
+                       value="{{ website.inputs_json|default('{}')|object_lookup('target') if website else '' }}" placeholder="例：30代〜40代の働く女性、ファミリー層" required>
+              </div>
+              <div class="form-group">
+                <label for="tone">サイトの雰囲気・トーン</label>
+                <select id="tone" name="tone" class="form-control" required>
+                  <option value="親しみやすい" {% if website and website.inputs_json|default('{}')|object_lookup('tone') == '親しみやすい' %}selected{% endif %}>親しみやすい・カジュアル</option>
+                  <option value="高級感がある" {% if website and website.inputs_json|default('{}')|object_lookup('tone') == '高級感がある' %}selected{% endif %}>高級感・信頼感</option>
+                  <option value="シンプル・モダン" {% if website and website.inputs_json|default('{}')|object_lookup('tone') == 'シンプル・モダン' %}selected{% endif %}>シンプル・モダン</option>
+                </select>
+              </div>
+              <!-- Option to select writing style instead of AI model -->
+              <div class="form-group" style="display:none;">
+                <input type="hidden" name="model_type" value="flash">
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">🚀 構成・デザインをプレビューに流し込む</button>
+            </form>
+          </div>
+
+          <!-- Domain settings -->
+          <div class="card">
+            <h3 class="card-title">🌐 独自ドメイン・公開設定</h3>
+            
+            {% if website %}
+              <div style="margin-bottom: 20px;">
+                <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">現在の公開ステータス</div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                  {% if website.published_status == 'live' %}
+                    <span class="badge badge-success">本番公開中 (Live)</span>
+                  {% else %}
+                    <span class="badge badge-warning">ステージング環境 (Staging)</span>
+                  {% endif %}
+                  
+                  {% if website.domain_requested %}
+                    {% if website.domain_status == 'active' %}
+                      <span class="badge badge-success">ドメイン連携済</span>
+                    {% else %}
+                      <span class="badge badge-warning">ドメイン申請中</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+
+              <form action="/request-domain" method="POST">
+                <div class="form-group">
+                  <label for="domain">希望する独自ドメイン（例: store-name.com）</label>
+                  <input type="text" id="domain" name="domain" class="form-control" 
+                         value="{{ website.domain_requested if website.domain_requested else '' }}" placeholder="例：cafe-ranse.com" required>
+                </div>
+                <button type="submit" class="btn btn-secondary btn-block">🌐 独自ドメインの紐付け申請をする</button>
+              </form>
+            {% else %}
+              <p style="color: var(--text-muted); font-size: 13.5px;">まずはホームページを作成すると、ドメイン設定が行えるようになります。</p>
+            {% endif %}
+          </div>
+
+          <!-- AI chat editor revision -->
+          {% if website %}
+            <div class="card">
+              <h3 class="card-title">💬 制作チームへの修正依頼・アシスタント</h3>
+            
+            <div class="chat-container">
+              <div class="chat-bubble chat-ai">
+                ホームページのドラフトが作成されました！<br>
+                文章の言い回しやキャッチコピーの変更、プランの掲載金額など、修正したい内容を下のフォームに入力してください。制作チームがテキストの更新を行います。
+              </div>
+                
+                {% for chat in chats %}
+                  {% if chat.sender == 'client' %}
+                    <div class="chat-bubble chat-client">
+                      {{ chat.message }}
+                    </div>
+                  {% else %}
+                    <div class="chat-bubble chat-ai">
+                      {{ chat.message }}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+              <form action="/request-revision" method="POST">
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <textarea name="message" class="form-control" placeholder="例：キャッチコピーをもう少し若者向けにキャッチーにして、値段を3000円に変更してほしい。" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-secondary btn-block">💬 修正を依頼する ➔</button>
+              </form>
+            </div>
+          {% endif %}
+
+        </div>
+
+        <!-- RIGHT: LIVE PREVIEW CONTAINER -->
+        <div>
+          <div class="card" style="position: sticky; top: 90px;">
+            <h3 class="card-title">🖥️ ホームページ リアルタイムプレビュー</h3>
+            
+            {% if website and website.generated_content_json %}
+              <div style="margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <span style="font-size:13px; color:var(--text-muted);">
+                  プレビュー用リンク: 
+                  <a href="/site/{{ website.id }}" target="_blank" style="color:var(--primary); text-decoration:underline;">
+                    /site/{{ website.id }}
+                  </a>
+                </span>
+                
+                {% if website.domain_requested and website.domain_status == 'active' %}
+                  <span style="font-size:13px; color:var(--success); font-weight:bold;">
+                    🔗 Live Domain: http://{{ website.domain_requested }}
+                  </span>
+                {% endif %}
+              </div>
+              
+              <div class="preview-wrapper">
+                <!-- Staging overlay block if suspended -->
+                {% if website.published_status == 'staging' and website.domain_requested and website.domain_status == 'active' %}
+                  <div class="inactive-overlay">
+                    <h2>⚠️ サイト一時停止中</h2>
+                    <p>月額決済が未完了、またはお支払いが確認できないため、本番ドメインへの公開が制限されています。</p>
+                  </div>
+                {% endif %}
+                
+                <iframe src="/site/{{ website.id }}"></iframe>
+              </div>
+            {% else %}
+              <div style="height:400px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:var(--text-muted); background-color: rgba(0,0,0,0.1); border-radius:8px; border:2px dashed var(--border-color);">
+                <div style="font-size:48px; margin-bottom:15px;">🌐</div>
+                <p>左のフォームに店舗情報を入力して<br>「構成・デザインをプレビューに流し込む」ボタンを押してください。<br>プレビューがここに表示されます。</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    {% endif %}
+
+  </div>
+
+</body>
+</html>
