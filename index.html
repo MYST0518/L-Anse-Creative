@@ -297,7 +297,13 @@
           <div class="wizard-progress-bar" id="wizardProgress"></div>
         </div>
 
-        <form action="http://localhost:8080/contact" method="POST" id="wizardForm">
+        <form action="https://api.web3forms.com/submit" method="POST" id="wizardForm">
+          <!-- Web3Forms Config -->
+          <input type="hidden" name="access_key" value="af7913ef-c4b6-428c-baf5-cd7367700275">
+          <input type="hidden" name="subject" value="【L'Anse Creative】新しいデモ制作・お問い合わせが届きました">
+          <input type="hidden" name="from_name" value="L'Anse Creative お問い合わせ窓口">
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+          <input type="hidden" name="redirect" value="https://myst0518.github.io/L-Anse-Creative/?contact_success=true">
           <!-- Step 1: Industry & Vibe -->
           <div class="wizard-step active" id="step1">
             <span class="wizard-subtitle">STEP 1. 業種とデザインイメージ</span>
