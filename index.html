@@ -24,12 +24,10 @@
         <li><a href="#services-sec" class="nav-link">SERVICES</a></li>
         <li><a href="#pricing-sec" class="nav-link">PRICING</a></li>
         <li><a href="#works-sec" class="nav-link">WORKS</a></li>
-        {% if user %}
-          <li><a href="/mypage" class="nav-link">MYPAGE</a></li>
-          <li><a href="/logout" class="nav-link">LOGOUT</a></li>
-        {% else %}
+        <li><a href="blog.html" class="nav-link">BLOG</a></li>
+        
           <li><a href="#" class="nav-link" id="loginNavLink">LOGIN</a></li>
-        {% endif %}
+        
         <li><a href="#demoForm" class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">CONTACT</a></li>
       </ul>
     </div>
@@ -238,6 +236,42 @@
         </div>
       </div>
     </div>
+
+    <!-- RECENT BLOGS SECTION -->
+    
+      <div class="blog-preview-section" style="margin: 120px 0;">
+        <div class="section-title-wrap">
+          <span class="section-subtitle">Blog & News</span>
+          <h2 class="section-title">最新のブログ記事</h2>
+        </div>
+        <div class="blog-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px;">
+          
+            <article class="blog-preview-card card" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 2px;">
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 8px;">2026-06-21</span>
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; font-family: var(--font-header);"><a href="blog_detail_1.html" style="color: var(--text-main);">L'Anse Creative 公式ブログを開設しました</a></h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">平素より L'Anse Creative をご利用いただき、誠にありがとうございます。
+
+本日より、制作事例のご紹介やWebデザイン、SEO対策、最新のWebテ...</p>
+              </div>
+              <a href="blog_detail_1.html" style="font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px;">READ ARTICLE ➔</a>
+            </article>
+          
+            <article class="blog-preview-card card" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 2px;">
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 8px;">2026-06-21</span>
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; font-family: var(--font-header);"><a href="blog_detail_2.html" style="color: var(--text-main);">初期費用を抑えて高品質なホームページを運用する秘訣</a></h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">新しく店舗を開業される際や、会社のコーポレートサイトをリニューアルされる際、「初期費用が数十万〜数百万円もかかってしまう」といったコストの課題に直面することは少...</p>
+              </div>
+              <a href="blog_detail_2.html" style="font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px;">READ ARTICLE ➔</a>
+            </article>
+          
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="blog.html" class="btn btn-secondary">ブログ記事一覧を見る ➔</a>
+        </div>
+      </div>
+    
 
     <!-- CONTACT FORM SECTION -->
     <div style="display:flex; justify-content:center; margin-bottom: 120px;">
