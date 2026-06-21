@@ -1130,6 +1130,16 @@ select.form-control {
   border: 1px solid #e4e4e7;
 }
 
+.status-icon.emphasized {
+  color: #000000 !important;
+  border-color: #000000 !important;
+  font-weight: 800 !important;
+}
+
+.pricing-mobile-badge {
+  display: none;
+}
+
 /* Steps Section Styling */
 .steps-section {
   margin: 120px 0;
@@ -1418,24 +1428,120 @@ select.form-control {
     gap: 48px;
   }
 
-  /* ── 料金表: 横スクロール ──────────────── */
+  /* ── 料金表: スマホ向け一画面・スクロールなし ── */
   .pricing-table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: visible;
+    border: none;
+    background: transparent;
+    margin-top: 24px;
   }
 
   .pricing-table {
-    min-width: 560px;
+    display: block;
+    width: 100%;
+    min-width: auto;
   }
 
-  .pricing-table th, .pricing-table td {
-    padding: 14px 12px;
-    font-size: 11px;
+  .pricing-table thead {
+    display: none;
   }
 
-  .pricing-badge {
-    font-size: 8px;
+  .pricing-table tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .pricing-table tr {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 24px;
+    background-color: var(--bg-card);
+    padding: 16px;
+  }
+
+  .pricing-table tr:hover td {
+    background-color: transparent !important;
+  }
+
+  .pricing-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px dashed var(--border-color);
+    font-size: 13px;
+    text-align: right;
+  }
+
+  .pricing-table td:last-child {
+    border-bottom: none;
+  }
+
+  .pricing-table td.feature-name {
+    display: block;
+    text-align: left;
+    font-size: 14.5px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    background-color: transparent;
+  }
+
+  .pricing-table td:nth-child(2)::before {
+    content: "一般的な制作会社";
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+  }
+
+  .pricing-table td:nth-child(3)::before {
+    content: "フリーランス";
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+  }
+
+  .pricing-table td:nth-child(4)::before {
+    content: "L'Anse Creative";
+    font-weight: 700;
+    color: var(--text-main);
+    text-align: left;
+  }
+
+  .pricing-table td.highlight {
+    background-color: rgba(0, 0, 0, 0.02) !important;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    padding: 12px 8px;
+    margin-top: 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color) !important;
+  }
+
+  .pricing-val {
+    display: block;
+    text-align: right;
+  }
+
+  .pricing-mobile-badge {
+    display: inline-block;
+    background: #000000;
+    color: white;
     padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    width: fit-content;
   }
 
   /* ── ステップ: ゆったり1カラム ─────────── */
