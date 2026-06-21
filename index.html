@@ -298,6 +298,14 @@
                   <input type="radio" name="tone_radio">
                   <span class="vibe-option-text">シンプル・モダン</span>
                 </div>
+                <div class="vibe-option" data-val="その他">
+                  <input type="radio" name="tone_radio">
+                  <span class="vibe-option-text">その他（自由記入）</span>
+                </div>
+              </div>
+              <!-- その他を選んだ場合のテキスト入力欄 -->
+              <div id="toneOtherWrap" style="display:none; margin-top: 12px;">
+                <input type="text" id="toneOtherInput" class="form-control" placeholder="例：ポップで元気、和風・落ち着いた、アウトドア系 など" oninput="document.getElementById('toneInput').value = this.value || 'その他'">
               </div>
             </div>
 
@@ -409,12 +417,23 @@
     // Select Vibe Radio Click handler
     const vibeOptions = document.querySelectorAll('.vibe-option');
     const toneInput = document.getElementById('toneInput');
+    const toneOtherWrap = document.getElementById('toneOtherWrap');
+    const toneOtherInput = document.getElementById('toneOtherInput');
     vibeOptions.forEach(opt => {
       opt.addEventListener('click', () => {
         vibeOptions.forEach(o => o.classList.remove('active'));
         opt.classList.add('active');
         opt.querySelector('input[type="radio"]').checked = true;
-        toneInput.value = opt.getAttribute('data-val');
+        const val = opt.getAttribute('data-val');
+        if (val === 'その他') {
+          toneOtherWrap.style.display = 'block';
+          toneInput.value = toneOtherInput.value || 'その他';
+          toneOtherInput.focus();
+        } else {
+          toneOtherWrap.style.display = 'none';
+          toneOtherInput.value = '';
+          toneInput.value = val;
+        }
       });
     });
 
