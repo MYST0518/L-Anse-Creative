@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ post.title }} | L'Anse Creative</title>
+  <link rel="stylesheet" href="/static/dashboard.css?v=1.0.5">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">L'Anse Creative<span>Web Design</span></a>
+      <ul class="nav-menu">
+        <li><a href="/" class="nav-link">HOME</a></li>
+        <li><a href="/#services-sec" class="nav-link">SERVICES</a></li>
+        <li><a href="/#pricing-sec" class="nav-link">PRICING</a></li>
+        <li><a href="/#works-sec" class="nav-link">WORKS</a></li>
+        <li><a href="/blog" class="nav-link">BLOG</a></li>
+        <li><a href="/#demoForm" class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">CONTACT</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container" style="max-width: 800px; padding: 120px 24px;">
+    <article class="blog-article">
+      <header class="blog-article-header">
+        <span class="blog-article-date">{{ post.created_at[:10] }}</span>
+        <h1 class="blog-article-title">{{ post.title }}</h1>
+        <div class="blog-article-meta">Author: {{ post.author_name }}</div>
+      </header>
+
+      <div class="blog-article-content">
+        {{ post.content | replace('\n', '<br>') | safe }}
+      </div>
+
+      <footer class="blog-article-footer" style="margin-top: 80px; border-top: 1px solid var(--border-color); padding-top: 40px; text-align: center;">
+        <a href="/blog" class="btn btn-secondary">← ブログ一覧に戻る</a>
+      </footer>
+    </article>
+  </div>
+
+</body>
+</html>
