@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>L'Anse Creative | 高品質ホームページ制作・運用保守パッケージ</title>
-  <link rel="stylesheet" href="/static/dashboard.css">
+  <link rel="stylesheet" href="/static/dashboard.css?v=1.0.6">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
         <li><a href="#services-sec" class="nav-link">SERVICES</a></li>
         <li><a href="#pricing-sec" class="nav-link">PRICING</a></li>
         <li><a href="#works-sec" class="nav-link">WORKS</a></li>
+        <li><a href="/blog" class="nav-link">BLOG</a></li>
         <li><a href="#demoForm" class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">CONTACT</a></li>
       </ul>
     </div>
@@ -49,60 +50,7 @@
           <a href="#demoForm" class="btn btn-primary">無料デモ制作を相談する ➔</a>
         </div>
         
-        <div>
-          <!-- Tab controls above the browser mockup -->
-          <div class="mockup-tabs-wrapper">
-            <span class="mockup-tabs-label">制作事例デモプレビュー（業種を切り替え）</span>
-            <div class="mockup-tabs">
-              <button class="mockup-tab active" data-theme="cafe">☕ カフェ</button>
-              <button class="mockup-tab" data-theme="salon">💇 美容室</button>
-              <button class="mockup-tab" data-theme="repair">🛠️ リペア</button>
-            </div>
-          </div>
-          
-          <div class="device-preview">
-            <div class="device-header">
-              <span class="device-dot"></span>
-              <span class="device-dot"></span>
-              <span class="device-dot"></span>
-              <div class="device-address">https://demo.lanse-creative.jp/</div>
-            </div>
-            <div class="device-body">
-              <!-- Loading Overlay -->
-              <div class="mockup-loader" id="mockupLoader">
-                <div class="loader-spinner"></div>
-                <div class="loader-text" id="loaderText">DESIGN DATA LOADING...</div>
-              </div>
-              
-              <!-- Mini site iframe simulator -->
-              <div class="mini-site theme-cafe" id="miniSite">
-                <div class="mini-header">
-                  <span class="mini-logo" id="miniLogo">Cafe L'Anse</span>
-                  <div class="mini-nav">
-                    <span>ホーム</span>
-                    <span>メニュー</span>
-                    <span>アクセス</span>
-                  </div>
-                </div>
-                <div class="mini-hero">
-                  <h4 class="mini-title" id="miniTitle">薫り立つ一杯と、贅沢な時間。</h4>
-                  <p class="mini-desc" id="miniDesc">自家焙煎の厳選珈琲と、手作り焼き立てタルトをお届け。路地裏に佇む隠れ家カフェ。</p>
-                  <a href="javascript:void(0)" class="mini-btn" id="miniBtn">メニューを見る</a>
-                </div>
-                <div class="mini-grid">
-                  <div class="mini-card">
-                    <h4 id="miniSvc1">自家焙煎珈琲</h4>
-                    <p id="miniSvc1Desc">世界中から厳選した豆を店内で丁寧に焙煎。</p>
-                  </div>
-                  <div class="mini-card">
-                    <h4 id="miniSvc2">季節のタルト</h4>
-                    <p id="miniSvc2Desc">旬のフルーツを贅沢に使ったサクサクのタルト。</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
       
       <!-- Vertical Scroll Indicator -->
@@ -186,33 +134,33 @@
           <tbody>
             <tr>
               <td class="feature-name">初期費用（デザイン・構築）</td>
-              <td><span class="status-icon bad">×</span>15万 〜 50万円</td>
-              <td><span class="status-icon bad">×</span>5万 〜 15万円</td>
-              <td class="highlight"><span class="status-icon good">✓</span>150,000円 <br><span style="font-size:11px;color:var(--accent-color);font-weight:bold;">(キャンペーンで98,000円)</span></td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>30万 〜 150万円</span></td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>15万 〜 50万円</span></td>
+              <td class="highlight"><span class="pricing-val"><div class="pricing-mobile-badge">キャンペーン実施中</div><span class="status-icon good">✓</span><span style="font-size:18px;font-weight:700;">98,000円</span><br><span style="font-size:11px;color:var(--text-muted);">(通常 150,000円)</span></span></td>
             </tr>
             <tr>
               <td class="feature-name">月額費用（保守・サーバー管理）</td>
-              <td><span class="status-icon bad">×</span>5,000円 〜 15,000円</td>
-              <td><span class="status-icon warning">▲</span>3,000円 〜 8,000円</td>
-              <td class="highlight"><span class="status-icon good">✓</span>2,980円 (税込)</td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>5,000円 〜 15,000円</span></td>
+              <td><span class="pricing-val"><span class="status-icon warning emphasized">▲</span>3,000円 〜 8,000円</span></td>
+              <td class="highlight"><span class="pricing-val"><span class="status-icon good">✓</span>2,980円 (税込)</span></td>
             </tr>
             <tr>
               <td class="feature-name">コンテンツ文章作成（原稿構成）</td>
-              <td><span class="status-icon bad">×</span>別料金（数万円）</td>
-              <td><span class="status-icon bad">×</span>お客様自身で執筆</td>
-              <td class="highlight"><span class="status-icon good">✓</span>制作チームによる原稿整理 (無料)</td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>別料金（数万円）</span></td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>お客様自身で執筆</span></td>
+              <td class="highlight"><span class="pricing-val"><span class="status-icon good">✓</span>制作チームによる原稿整理 (無料)</span></td>
             </tr>
             <tr>
               <td class="feature-name">独自ドメインDNS接続設定</td>
-              <td><span class="status-icon bad">×</span>別料金 / 複雑な手作業</td>
-              <td><span class="status-icon bad">×</span>お客様ご自身でDNS操作</td>
-              <td class="highlight"><span class="status-icon good">✓</span>ドメイン連携・設定代行 (無料)</td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>別料金 / 複雑な手作業</span></td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>お客様ご自身でDNS操作</span></td>
+              <td class="highlight"><span class="pricing-val"><span class="status-icon good">✓</span>ドメイン連携・設定代行 (無料)</span></td>
             </tr>
             <tr>
               <td class="feature-name">解約違約金 / 最低契約期間</td>
-              <td><span class="status-icon bad">×</span>1年〜2年縛り / 残債一括</td>
-              <td><span class="status-icon warning">▲</span>契約内容による</td>
-              <td class="highlight"><span class="status-icon good">✓</span>なし（いつでも解約可能）</td>
+              <td><span class="pricing-val"><span class="status-icon bad emphasized">×</span>1年〜2年縛り / 残債一括</span></td>
+              <td><span class="pricing-val"><span class="status-icon warning emphasized">▲</span>契約内容による</span></td>
+              <td class="highlight"><span class="pricing-val"><span class="status-icon good">✓</span>なし（いつでも解約可能）</span></td>
             </tr>
           </tbody>
         </table>
@@ -223,7 +171,7 @@
     <div class="steps-section">
       <div class="section-title-wrap">
         <span class="section-subtitle">How it works</span>
-        <h2 class="section-title">簡単3ステップで公開</h2>
+        <h2 class="section-title">簡単<span style="font-family:var(--font-family);font-weight:700;">3</span>ステップで公開</h2>
       </div>
       <div class="steps-grid">
         <div class="step-card">
@@ -252,10 +200,10 @@
       </div>
       <div class="faq-list">
         <div class="faq-item">
-          <div class="faq-question">本当に初期費用は無料ですか？追加費用はありませんか？</div>
+          <div class="faq-question">追加費用はありませんか？</div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              いいえ、初期費用はキャンペーン適用により150,000円から98,000円（税込）となります。ドメインの手続きや、常時SSL対応、サーバー維持費、日々の保守管理サービスがすべて月額2,980円（税込）に含まれております。
+              はい、初期費用98,000円（通常150,000円・税込）と月額2,980円（税込）以外に追加の費用は一切発生しません。ドメインの接続設定や常時SSL対応、サーバー維持費、日々の保守管理サービスなどはすべて月額費用に含まれております。
             </div>
           </div>
         </div>
@@ -263,7 +211,7 @@
           <div class="faq-question">解約はいつでも行えますか？</div>
           <div class="faq-answer">
             <div class="faq-answer-inner">
-              はい、契約期間の縛りや解約違約金などは一切ございません。マイページの管理画面からいつでも保守管理サポートの停止や解約手続きが可能です。
+              はい、契約期間の縛りや解約違約金などは一切ございません。
             </div>
           </div>
         </div>
@@ -285,6 +233,31 @@
         </div>
       </div>
     </div>
+
+    <!-- RECENT BLOGS SECTION -->
+    {% if posts %}
+      <div class="blog-preview-section" style="margin: 120px 0;">
+        <div class="section-title-wrap">
+          <span class="section-subtitle">Blog & News</span>
+          <h2 class="section-title">最新のブログ記事</h2>
+        </div>
+        <div class="blog-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px;">
+          {% for post in posts %}
+            <article class="blog-preview-card card" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 2px;">
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 8px;">{{ post.created_at[:10] }}</span>
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px; font-family: var(--font-header);"><a href="/blog/{{ post.id }}" style="color: var(--text-main);">{{ post.title }}</a></h3>
+                <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">{{ post.content[:80] }}{% if post.content|length > 80 %}...{% endif %}</p>
+              </div>
+              <a href="/blog/{{ post.id }}" style="font-size: 11px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px;">READ ARTICLE ➔</a>
+            </article>
+          {% endfor %}
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="/blog" class="btn btn-secondary">ブログ記事一覧を見る ➔</a>
+        </div>
+      </div>
+    {% endif %}
 
     <!-- CONTACT FORM SECTION -->
     <div style="display:flex; justify-content:center; margin-bottom: 120px;">
@@ -345,6 +318,14 @@
                   <input type="radio" name="tone_radio">
                   <span class="vibe-option-text">シンプル・モダン</span>
                 </div>
+                <div class="vibe-option" data-val="その他">
+                  <input type="radio" name="tone_radio">
+                  <span class="vibe-option-text">その他（自由記入）</span>
+                </div>
+              </div>
+              <!-- その他を選んだ場合のテキスト入力欄 -->
+              <div id="toneOtherWrap" style="display:none; margin-top: 12px;">
+                <input type="text" id="toneOtherInput" class="form-control" placeholder="例：ポップで元気、和風・落ち着いた、アウトドア系 など" oninput="document.getElementById('toneInput').value = this.value || 'その他'">
               </div>
             </div>
 
@@ -415,119 +396,7 @@
   </div>
 
   <script>
-    // Mockup Demo Browser Data
-    const themesData = {
-      cafe: {
-        logo: "Cafe L'Anse",
-        title: "薫り立つ一杯と、贅沢な時間。",
-        desc: "自家焙煎の厳選珈琲と、手作り焼き立てタルトをお届け。路地裏に佇む隠れ家カフェ。",
-        btn: "メニューを見る",
-        svc1: "自家焙煎珈琲",
-        svc1Desc: "世界中から厳選した豆を店内で丁寧に焙煎。",
-        svc2: "季節のタルト",
-        svc2Desc: "旬 of フルーツを贅沢に使ったサクサクのタルト。"
-      },
-      salon: {
-        logo: "Salon de L'Anse",
-        title: "髪から始まる、新しい私のストーリー。",
-        desc: "オーガニック素材にこだわり、あなたの魅力を最大限に引き出すプライベートヘアサロン。",
-        btn: "ご予約はこちら",
-        svc1: "似合わせカット",
-        svc1Desc: "骨格や髪質に合わせたオーダーメイドスタイル。",
-        svc2: "オーガニックカラー",
-        svc2Desc: "頭皮に優しく透明感のある上品な発色。"
-      },
-      repair: {
-        logo: "L'Anse リペア",
-        title: "暮らしのお困りごと、即座に解決。",
-        desc: "水漏れ修理から大掛かりなリフォームまで。安心の地域密着・迅速対応・明朗会計。",
-        btn: "無料見積もりを依頼する",
-        svc1: "緊急トラブル対応",
-        svc1Desc: "蛇口の水漏れや排水詰まりに即座に駆けつけます。",
-        svc2: "住まいリフォーム",
-        svc2Desc: "手すり設置からクロス張替えまで幅広く対応。"
-      }
-    };
 
-    // Tab Switcher and Loader logic
-    const tabs = document.querySelectorAll('.mockup-tab');
-    const miniSite = document.getElementById('miniSite');
-    const loader = document.getElementById('mockupLoader');
-    const loaderText = document.getElementById('loaderText');
-    
-    let activeTheme = 'cafe';
-    let rotationInterval;
-    let isUserInteracted = false;
-
-    function switchTheme(theme) {
-      if (!themesData[theme]) return;
-      
-      // Show loader
-      loader.classList.add('active');
-      loaderText.innerText = "DESIGN DATA LOADING...";
-      
-      setTimeout(() => {
-        // Change classes on the mini-site frame
-        miniSite.className = `mini-site theme-${theme}`;
-        
-        // Update content elements
-        const data = themesData[theme];
-        document.getElementById('miniLogo').innerText = data.logo;
-        document.getElementById('miniTitle').innerText = data.title;
-        document.getElementById('miniDesc').innerText = data.desc;
-        document.getElementById('miniBtn').innerText = data.btn;
-        document.getElementById('miniSvc1').innerText = data.svc1;
-        document.getElementById('miniSvc1Desc').innerText = data.svc1Desc;
-        document.getElementById('miniSvc2').innerText = data.svc2;
-        document.getElementById('miniSvc2Desc').innerText = data.svc2Desc;
-        
-        // Hide loader
-        setTimeout(() => {
-          loader.classList.remove('active');
-        }, 150);
-      }, 500);
-    }
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        isUserInteracted = true;
-        clearInterval(rotationInterval);
-        
-        const theme = tab.getAttribute('data-theme');
-        if (theme === activeTheme) return;
-        
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        activeTheme = theme;
-        
-        switchTheme(theme);
-      });
-    });
-
-    // Auto-rotation
-    function startAutoRotation() {
-      const themesList = ['cafe', 'salon', 'repair'];
-      let currentIndex = 0;
-      
-      rotationInterval = setInterval(() => {
-        if (isUserInteracted) return;
-        currentIndex = (currentIndex + 1) % themesList.length;
-        const nextTheme = themesList[currentIndex];
-        
-        tabs.forEach(t => {
-          if (t.getAttribute('data-theme') === nextTheme) {
-            t.classList.add('active');
-          } else {
-            t.classList.remove('active');
-          }
-        });
-        
-        activeTheme = nextTheme;
-        switchTheme(nextTheme);
-      }, 5000);
-    }
-    
-    startAutoRotation();
 
     // Smooth FAQ Accordion
     const faqItems = document.querySelectorAll('.faq-item');
@@ -568,12 +437,23 @@
     // Select Vibe Radio Click handler
     const vibeOptions = document.querySelectorAll('.vibe-option');
     const toneInput = document.getElementById('toneInput');
+    const toneOtherWrap = document.getElementById('toneOtherWrap');
+    const toneOtherInput = document.getElementById('toneOtherInput');
     vibeOptions.forEach(opt => {
       opt.addEventListener('click', () => {
         vibeOptions.forEach(o => o.classList.remove('active'));
         opt.classList.add('active');
         opt.querySelector('input[type="radio"]').checked = true;
-        toneInput.value = opt.getAttribute('data-val');
+        const val = opt.getAttribute('data-val');
+        if (val === 'その他') {
+          toneOtherWrap.style.display = 'block';
+          toneInput.value = toneOtherInput.value || 'その他';
+          toneOtherInput.focus();
+        } else {
+          toneOtherWrap.style.display = 'none';
+          toneOtherInput.value = '';
+          toneInput.value = val;
+        }
       });
     });
 
