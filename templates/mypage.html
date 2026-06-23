@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>マイページ - L'Anse Creative</title>
-  <link rel="stylesheet" href="/static/dashboard.css">
+  <link rel="stylesheet" href="/static/dashboard.css?v=1.0.5">
 </head>
 <body>
 
@@ -141,6 +141,46 @@
               </form>
             {% else %}
               <p style="color: var(--text-muted); font-size: 13.5px;">まずはホームページを作成すると、ドメイン設定が行えるようになります。</p>
+            {% endif %}
+          </div>
+
+          <!-- BLOG PUBLISHING SECTION -->
+          <div class="card">
+            <h3 class="card-title">✍️ ブログ記事の作成・管理</h3>
+            
+            <!-- Create Blog Form -->
+            <form action="/mypage/blog/create" method="POST" style="margin-bottom: 24px;">
+              <div class="form-group">
+                <label for="blogTitle">記事のタイトル</label>
+                <input type="text" id="blogTitle" name="title" class="form-control" placeholder="例：新メニュー追加のお知らせ" required>
+              </div>
+              <div class="form-group">
+                <label for="blogContent">記事本文</label>
+                <textarea id="blogContent" name="content" class="form-control" style="min-height: 150px;" placeholder="記事の本文を入力してください（改行も反映されます）。" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">✍️ 記事を公開する ➔</button>
+            </form>
+            
+            <!-- List of Existing Blogs -->
+            {% if blog_posts %}
+              <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <label style="margin-bottom: 12px; font-weight: 700;">投稿済みの記事一覧 ({{ blog_posts|length }}件)</label>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0;">
+                  {% for post in blog_posts %}
+                    <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px;">
+                      <div style="text-align: left;">
+                        <span style="font-size: 11px; color: var(--text-muted); display: block;">{{ post.created_at[:10] }}</span>
+                        <a href="/blog/{{ post.id }}" target="_blank" style="font-weight: 600; font-size: 13.5px; color: var(--text-main);">{{ post.title }}</a>
+                      </div>
+                      <form action="/mypage/blog/delete/{{ post.id }}" method="POST" style="margin: 0;" onsubmit="return confirm('この記事を削除してもよろしいですか？');">
+                        <button type="submit" class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px; min-height: auto;">削除</button>
+                      </form>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              <p style="color: var(--text-muted); font-size: 12px; margin-top: 20px;">まだブログ記事がありません。</p>
             {% endif %}
           </div>
 
