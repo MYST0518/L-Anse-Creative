@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOG | L'Anse Creative</title>
+  <link rel="stylesheet" href="/static/dashboard.css?v=1.0.5">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">L'Anse Creative<span>Web Design</span></a>
+      <ul class="nav-menu">
+        <li><a href="/" class="nav-link">HOME</a></li>
+        <li><a href="/#services-sec" class="nav-link">SERVICES</a></li>
+        <li><a href="/#pricing-sec" class="nav-link">PRICING</a></li>
+        <li><a href="/#works-sec" class="nav-link">WORKS</a></li>
+        <li><a href="/blog" class="nav-link">BLOG</a></li>
+        <li><a href="/#demoForm" class="btn btn-primary" style="padding: 10px 24px; font-size: 13px;">CONTACT</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="section-title-wrap">
+      <span class="section-subtitle">News & Insights</span>
+      <h2 class="section-title">L'Anse Creative Blog</h2>
+    </div>
+
+    <div class="blog-list-wrapper">
+      {% if posts %}
+        <div class="blog-grid">
+          {% for post in posts %}
+            <article class="blog-item">
+              <span class="blog-date">{{ post.created_at[:10] }}</span>
+              <h3 class="blog-title"><a href="/blog/{{ post.id }}">{{ post.title }}</a></h3>
+              <p class="blog-excerpt">{{ post.content[:120] }}{% if post.content|length > 120 %}...{% endif %}</p>
+              <a href="/blog/{{ post.id }}" class="blog-more-link">READ MORE ➔</a>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div style="text-align: center; color: var(--text-muted); padding: 80px 0;">
+          <p>投稿された記事がありません。</p>
+          <a href="/" class="btn btn-secondary" style="margin-top: 20px;">トップに戻る</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>
