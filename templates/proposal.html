@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>共創型ミュージックプロモーション企画提案書 〜クリエイターとの共創でファンを増やす、SNS参加型公式ソング・コンテスト〜</title>
+  <title>SNSで勝手に広がる！「お店の公式ソング」制作コンテスト企画書</title>
   <link rel="stylesheet" href="/static/dashboard.css?v=1.0.2">
   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <script>
@@ -518,7 +518,7 @@
       /* Premium Cover design for printed PDF */
       .doc-cover {
         text-align: left;
-        padding: 60mm 15mm 20mm 15mm !important;
+        padding: 20mm 15mm 20mm 15mm !important;
         background: none !important;
         border: none !important;
         border-radius: 0 !important;
@@ -707,7 +707,7 @@
       }
       
       /* Section Page Breaks */
-      #p-merit, #p-design, #p-schedule, #p-budget, #p-faq, #s-outline {
+      #p-merit, #p-design, #p-schedule, #p-faq, #s-outline {
         page-break-before: always !important;
         break-before: page !important;
       }
@@ -749,6 +749,46 @@
         gap: 8px !important;
         grid-template-columns: 80px 1fr !important;
       }
+
+      /* Compact Section 6 and 7 for printing on a single page (Page 5) */
+      #p-schedule, #p-budget {
+        padding-top: 2mm !important;
+        padding-bottom: 2mm !important;
+      }
+      #p-schedule h2, #p-budget h2 {
+        margin-top: 5mm !important;
+        margin-bottom: 10px !important;
+        font-size: 16pt !important;
+      }
+      #p-schedule p, #p-budget p {
+        margin-bottom: 8px !important;
+        font-size: 9.5pt !important;
+      }
+      #p-schedule .doc-table-wrapper {
+        margin: 10px 0 !important;
+      }
+      #p-schedule .doc-table th, #p-schedule .doc-table td {
+        padding: 6px 10px !important;
+        font-size: 8.5pt !important;
+      }
+      #p-budget .doc-callout {
+        padding: 12px 16px !important;
+        margin: 10px 0 !important;
+      }
+      #p-budget .doc-callout-title {
+        font-size: 11pt !important;
+      }
+      #p-budget .doc-callout p[style*="font-weight: 700"] {
+        font-size: 10.5pt !important;
+        margin-top: 8px !important;
+        margin-bottom: 2px !important;
+      }
+      #p-budget .doc-callout p[style*="margin-left: 15px"] {
+        font-size: 9pt !important;
+        margin-top: 2px !important;
+        margin-bottom: 8px !important;
+        line-height: 1.45 !important;
+      }
     }
   </style>
 </head>
@@ -761,7 +801,7 @@
     <!-- DOCUMENT COVER -->
     <div class="doc-cover">
       <div class="badge badge-warning">店舗PRイベント企画案</div>
-      <h1>共創型ミュージック<br>プロモーション企画提案書<br><span style="font-size: 18px; font-weight: 500; letter-spacing: 0.5px; display: block; margin-top: 10px; color: var(--text-muted);">〜クリエイターの熱量でバズを生み出す、SNS拡散型公式ソング・コンテスト〜</span></h1>
+      <h1>SNSで勝手に広がる！<br>「お店の公式ソング」<br>制作コンテスト企画書</h1>
       <p style="font-size: 15px; max-width: 750px; margin: 20px auto 0 auto; color: var(--text-muted); line-height: 1.7;">
         ネット上で活躍する音楽クリエイターに「お店の歌」を作ってもらい、それぞれのSNSを通じてお店の魅力を世の中に発信・拡散してもらう楽しいイベント企画です。
       </p>
@@ -834,7 +874,7 @@
         <section id="p-outline" class="doc-section doc-card">
           <h2>2. どんなイベント？（企画の概要）</h2>
           <p>
-            ネット上で歌やボカロ曲を作っている全国のクリエイターへ向けて、お店の魅力を伝える明るくキャッチーな「公式ソング」を募集します。
+            ネット上で歌やボカロ曲、AIミュージックを作っている全国のクリエイターへ向けて、お店の魅力を伝える明るくキャッチーな「公式ソング」を募集します。
           </p>
           <div class="doc-table-wrapper">
             <table class="doc-table">
