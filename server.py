@@ -71,6 +71,16 @@ def init_db():
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS blog_posts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    """)
     
     # Ensure all columns exist for demo_requests
     columns_to_add = [
@@ -141,7 +151,12 @@ def get_current_user(user_id: str = Cookie(None)):
 @app.get("/", response_class=HTMLResponse)
 async def read_index(request: Request, user_id: str = Cookie(None)):
     current_user = get_current_user(user_id)
-    return templates.TemplateResponse(request, "index.html", {"user": current_user})
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT bp.*, u.name as author_name FROM blog_posts bp JOIN users u ON bp.user_id = u.id ORDER BY bp.created_at DESC LIMIT 3")
+    posts = cursor.fetchall()
+    conn.close()
+    return templates.TemplateResponse(request, "index.html", {"user": current_user, "posts": posts})
 
 @app.get("/proposal", response_class=HTMLResponse)
 async def read_proposal(request: Request):
@@ -266,15 +281,72 @@ async def read_mypage(request: Request, user_id: str = Cookie(None)):
     
     chats = []
     if website:
-        cursor.execute("SELECT * FROM chat_requests WHERE website_id = ? ORDER BY created_at ASC", (website["id"],))
-        chats = cursor.fetchall()
+      cursor.execute("SELECT * FROM chat_requests WHERE website_id = ? ORDER BY created_at ASC", (website["id"],))
+      chats = cursor.fetchall()
+      
+    # Fetch user's blog posts
+    cursor.execute("SELECT * FROM blog_posts WHERE user_id = ? ORDER BY created_at DESC", (current_user["id"],))
+    blog_posts = cursor.fetchall()
         
     conn.close()
     return templates.TemplateResponse(request, "mypage.html", {
         "user": current_user,
         "website": website,
-        "chats": chats
+        "chats": chats,
+        "blog_posts": blog_posts
     })
+
+# ----------------- BLOG ROUTING -----------------
+
+@app.get("/blog", response_class=HTMLResponse)
+async def list_blog(request: Request):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT bp.*, u.name as author_name FROM blog_posts bp JOIN users u ON bp.user_id = u.id ORDER BY bp.created_at DESC")
+    posts = cursor.fetchall()
+    conn.close()
+    return templates.TemplateResponse(request, "blog.html", {"posts": posts})
+
+@app.get("/blog/{post_id}", response_class=HTMLResponse)
+async def view_blog(request: Request, post_id: int):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT bp.*, u.name as author_name FROM blog_posts bp JOIN users u ON bp.user_id = u.id WHERE bp.id = ?", (post_id,))
+    post = cursor.fetchone()
+    conn.close()
+    if not post:
+        raise HTTPException(status_code=404, detail="Blog post not found")
+    return templates.TemplateResponse(request, "blog_detail.html", {"post": post})
+
+@app.post("/mypage/blog/create")
+async def create_blog_post(title: str = Form(...), content: str = Form(...), user_id: str = Cookie(None)):
+    current_user = get_current_user(user_id)
+    if not current_user:
+        return RedirectResponse(url="/", status_code=303)
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO blog_posts (user_id, title, content) VALUES (?, ?, ?)", (current_user["id"], title, content))
+    conn.commit()
+    conn.close()
+    return RedirectResponse(url="/mypage?blog=created", status_code=303)
+
+@app.post("/mypage/blog/delete/{post_id}")
+async def delete_blog_post(post_id: int, user_id: str = Cookie(None)):
+    current_user = get_current_user(user_id)
+    if not current_user:
+        return RedirectResponse(url="/", status_code=303)
+    
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM blog_posts WHERE id = ?", (post_id,))
+    post = cursor.fetchone()
+    if post:
+        if post["user_id"] == current_user["id"] or current_user["role"] == "admin":
+            cursor.execute("DELETE FROM blog_posts WHERE id = ?", (post_id,))
+            conn.commit()
+    conn.close()
+    return RedirectResponse(url="/mypage?blog=deleted", status_code=303)
 
 # ----------------- STRIPE SIMULATOR & PAYMENTS -----------------
 
